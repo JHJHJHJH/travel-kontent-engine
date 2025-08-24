@@ -12,17 +12,36 @@ def main():
     #openai_client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
     deepseek_client = OpenAI(api_key=os.environ['DEEPSEEK_API_KEY'], base_url="https://api.deepseek.com")
 
+    #user inputs
+    input_theme = "Tourist at Chile"
+    project_num = 3
+
+    #make folders
+    folder = f'_outputs\\{str(project_num)}'
+    output_img_folder = folder+'\\images'
+    output_video_folder = folder+'\\videos'
+    os.makedirs(folder, exist_ok=True)
+    os.makedirs(output_img_folder, exist_ok=True)
+    os.makedirs(output_video_folder, exist_ok=True)
+
     scene_agent = SceneAgent( deepseek_client )
-    scenes = scene_agent.generate("Adventurer at Macchu Pichu")
+    scenes = scene_agent.generate(input_theme)
     pprint.pprint(scenes)
 
-    project_num = 1
-    folder = f'_outputs/{str(project_num)}'
     img_prompt_agent = ImagePromptAgent(deepseek_client)
+    results = []
     for i,scene in enumerate(scenes['scenes']):
         prompt = img_prompt_agent.generate(scene)['prompt']
-        img_path = generate_image(prompt, folder, str(i)+'.jpg')
-        print(img_path)
+        img_path = generate_image(prompt, output_img_folder, str(i)+'.jpg')
+
+        result = {
+            "id" : i,
+            "scene" : scene,
+            "image_prompt": prompt,
+            "image_path" : img_path
+        }
+
+        results.append( result )
         
 if __name__ == "__main__":
     main()

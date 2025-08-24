@@ -47,7 +47,6 @@ def download_image(url, folder_path, filename=None):
 def generate_image( img_prompt, folder_path, filename ):
     
     API_KEY = os.getenv("WAVESPEED_API_KEY")
-    print(f"API_KEY: {API_KEY}")
 
     url = "https://api.wavespeed.ai/api/v3/bytedance/seedream-v3"
     headers = {
