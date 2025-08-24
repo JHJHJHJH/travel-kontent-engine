@@ -16,3 +16,10 @@
 ## Json2Video for video stiching (use python-ffmpeg instead)
 # - $50 / 120mins ([Base package](https://json2video.com/pricing/) )
 # - $0.21 / Video ( Assume 30s/ Video)
+
+# Instructions
+'''bash
+python -m venv myenv
+.\myenv\Scripts\activate
+
+'''
