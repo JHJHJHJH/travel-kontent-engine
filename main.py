@@ -6,6 +6,7 @@ load_dotenv()  # take environment variables
 import os
 from openai import OpenAI
 import pprint
+import json
 # python -m venv <myenv>
 # .\myenv\Scripts\activate
 def main():
@@ -13,8 +14,8 @@ def main():
     deepseek_client = OpenAI(api_key=os.environ['DEEPSEEK_API_KEY'], base_url="https://api.deepseek.com")
 
     #user inputs
-    input_theme = "Tourist at Chile"
-    project_num = 3
+    input_theme = "Citizen in Singapore"
+    project_num = 4
 
     #make folders
     folder = f'_outputs\\{str(project_num)}'
@@ -29,19 +30,27 @@ def main():
     pprint.pprint(scenes)
 
     img_prompt_agent = ImagePromptAgent(deepseek_client)
-    results = []
+    scene_outputs = []
     for i,scene in enumerate(scenes['scenes']):
         prompt = img_prompt_agent.generate(scene)['prompt']
         img_path = generate_image(prompt, output_img_folder, str(i)+'.jpg')
 
-        result = {
+        scene_output = {
             "id" : i,
             "scene" : scene,
             "image_prompt": prompt,
             "image_path" : img_path
         }
 
-        results.append( result )
-        
+        scene_outputs.append( scene_output )
+    
+    result = {
+        "theme" : input_theme,
+        "path" : folder,
+        "scenes" : scene_outputs
+    }
+    with open(folder + '\\result.json', 'w') as json_file:
+        json.dump(result, json_file, indent=4, sort_keys=True)
+
 if __name__ == "__main__":
     main()
