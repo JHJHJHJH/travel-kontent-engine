@@ -20,7 +20,7 @@ class ImagePromptAgent:
 
         Every prompt has three sections:
         1/ You always start the prompt with: `user input scene`
-        2/ In the foreground, show and describe the hands, limbs, or feet of the viewer. this section must start with "First person view POV GoPro shot of [relevant limb]..."
+        2/ In the foreground, show and describe the hands, limbs, or feet of the viewer (Choose the one most fitting to the context). this section must start with "First person view POV GoPro shot of [relevant limb]..."
         3/ In the background, describe the scenery. must start with "In the background, [describe scenery]"
 
         <instruction>
