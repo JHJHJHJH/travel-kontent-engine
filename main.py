@@ -14,8 +14,8 @@ def main():
     deepseek_client = OpenAI(api_key=os.environ['DEEPSEEK_API_KEY'], base_url="https://api.deepseek.com")
 
     #user inputs
-    input_theme = "Citizen in Singapore"
-    project_num = 4
+    input_theme = "Tourist in Singapore. 1. Shopping at marina bay sands 2. Riding the singapore flyer overseeing the cityscape 3. Visting the art science museum 4. Catching the Formula 1 night show at Marina floating platform "
+    project_num = 6
 
     #make folders
     folder = f'_outputs\\{str(project_num)}'
@@ -30,19 +30,19 @@ def main():
     pprint.pprint(scenes)
 
     img_prompt_agent = ImagePromptAgent(deepseek_client)
-    scene_outputs = []
+    scene_outputs = {}
     for i,scene in enumerate(scenes['scenes']):
         prompt = img_prompt_agent.generate(scene)['prompt']
-        img_path = generate_image(prompt, output_img_folder, str(i)+'.jpg')
+        img_url, img_path = generate_image(prompt, output_img_folder, str(i)+'.jpg')
 
         scene_output = {
-            "id" : i,
             "scene" : scene,
             "image_prompt": prompt,
-            "image_path" : img_path
+            "image_path" : img_path,
+            "image_url" : img_url
         }
 
-        scene_outputs.append( scene_output )
+        scene_outputs[i] = scene_output
     
     result = {
         "theme" : input_theme,

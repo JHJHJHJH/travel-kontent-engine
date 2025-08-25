@@ -4,9 +4,10 @@ import json
 import time
 from urllib.parse import urlparse
 from dotenv import load_dotenv
+import ffmpeg
 
 load_dotenv()
-def download_image(url, folder_path, filename=None):
+def download_video(url, folder_path, filename):
     """
     Download an image from URL to specified folder
     
@@ -22,13 +23,7 @@ def download_image(url, folder_path, filename=None):
         # Send GET request
         response = requests.get(url, stream=True)
         response.raise_for_status()  # Raise exception for bad status codes
-        
-        # Get filename from URL if not provided
-        if filename is None:
-            filename = os.path.basename(urlparse(url).path)
-            if not filename:
-                filename = "downloaded_image.jpg"
-        
+    
         # Full path to save the image
         file_path = os.path.join(folder_path, filename)
         
@@ -44,22 +39,19 @@ def download_image(url, folder_path, filename=None):
         print(f"Error downloading image: {e}")
         return None
 
-def generate_image( img_prompt, folder_path, filename ):
+def generate_video( video_prompt, image_url, folder_path, filename ):
     
     API_KEY = os.getenv("WAVESPEED_API_KEY")
 
-    url = "https://api.wavespeed.ai/api/v3/bytedance/seedream-v3"
+    url = "https://api.wavespeed.ai/api/v3/wavespeed-ai/wan-2.2/i2v-5b-720p"
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {API_KEY}",
     }
     payload = {
-        "enable_base64_output": False,
-        "enable_sync_mode": True,
-        "guidance_scale": 2.5,
-        "prompt": img_prompt,
-        "seed": -1,
-        "size": "1080*1920"
+        "image": image_url,
+        "prompt": video_prompt,
+        "seed": -1
     }
 
     begin = time.time()
@@ -87,8 +79,8 @@ def generate_image( img_prompt, folder_path, filename ):
                 print(f"Task completed in {end - begin} seconds.")
                 url = result["outputs"][0]
                 print(f"Task completed. URL: {url}")
-                img_path = download_image(url, folder_path, filename)
-                return url, img_path
+                img_path = download_video(url, folder_path, filename)
+                return img_path
             elif status == "failed":
                 print(f"Task failed: {result.get('error')}")
                 return None
@@ -100,6 +92,43 @@ def generate_image( img_prompt, folder_path, filename ):
 
         time.sleep(0.1)
         
+
+
+
+def join_mp4_files(input_files, output_file):
+    """
+    Join videos using FFmpeg concat demuxer (fastest method)
+    """
+    try:
+        # Create temporary file list
+        list_file = "file_list.txt"
+        
+        with open(list_file, 'w') as f:
+            for file in input_files:
+                f.write(f"file '{os.path.abspath(file)}'\n")
+        
+        # Use concat demuxer
+        (
+            ffmpeg
+            .input(list_file, format='concat', safe=0)
+            .output(output_file, c='copy')
+            .overwrite_output()
+            .run()
+        )
+        
+        print(f"Successfully joined videos to: {output_file}")
+        return True
+        
+    except ffmpeg.Error as e:
+        print(f"FFmpeg error: {e.stderr.decode()}")
+        return False
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
+    finally:
+        # Clean up temporary file
+        if os.path.exists(list_file):
+            os.remove(list_file)
 
 
 # if __name__ == "__main__":
