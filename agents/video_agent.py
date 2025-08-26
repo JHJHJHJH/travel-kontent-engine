@@ -184,6 +184,3 @@ def join_mp4_files(input_files, output_file):
         if os.path.exists(list_file):
             os.remove(list_file)
 
-
-# if __name__ == "__main__":
-#     generate_image()
