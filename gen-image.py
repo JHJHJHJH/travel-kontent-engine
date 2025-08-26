@@ -15,15 +15,17 @@ def main():
 
     #user inputs
     input_theme = "Tourist in Singapore. 1. Shopping at marina bay sands 2. Riding the singapore flyer overseeing the cityscape 3. Visting the art science museum 4. Catching the Formula 1 night show at Marina floating platform "
-    project_num = 6
+    project_num = 8
 
     #make folders
     folder = f'_outputs\\{str(project_num)}'
     output_img_folder = folder+'\\images'
     output_video_folder = folder+'\\videos'
+    output_video_waudio_folder = folder+'\\videos_waudio'
     os.makedirs(folder, exist_ok=True)
     os.makedirs(output_img_folder, exist_ok=True)
     os.makedirs(output_video_folder, exist_ok=True)
+    os.makedirs(output_video_waudio_folder, exist_ok=True)
 
     scene_agent = SceneAgent( deepseek_client )
     scenes = scene_agent.generate(input_theme)
@@ -33,6 +35,7 @@ def main():
     scene_outputs = {}
     for i,scene in enumerate(scenes['scenes']):
         prompt = img_prompt_agent.generate(scene)['prompt']
+        print(prompt)
         img_url, img_path = generate_image(prompt, output_img_folder, str(i)+'.jpg')
 
         scene_output = {

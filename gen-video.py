@@ -2,8 +2,8 @@
 import json
 import pprint
 import os
-from agents.video_agent import generate_video, join_mp4_files
-project_num = 6
+from agents.video_agent import generate_video, join_mp4_files, generate_video_waudio
+project_num = 8
 def main():
     #load_json
     def load_json(jsonfile):
@@ -40,18 +40,21 @@ def main():
     pprint.pprint(files_only)
     scene_dict = json_data['scenes']
     video_folder = f'_outputs\\{str(project_num)}\\videos'
+    video_waudio_folder = f'_outputs\\{str(project_num)}\\videos_waudio'
     for key in files_only:
         scene = scene_dict[key]
         video_prompt = scene['scene']
         img_url = scene['image_url']
 
-        # vid_path = generate_video( video_prompt, img_url, video_folder,  str(key)+'.mp4')
+        vid_url, vid_path = generate_video( video_prompt, img_url, video_folder,  str(key)+'.mp4')
         
-        # print(vid_path)
+        vid_waudio_url, vid_waudio_path = generate_video_waudio( video_prompt, vid_url, video_waudio_folder,  str(key)+'.mp4')
+        
+        
 
-    video_files = get_directory_files(video_folder, True)
+    video_files = get_directory_files(video_waudio_folder, True)
     
-    joint = join_mp4_files( video_files, f"{video_folder}\\combined.mp4")
+    joint = join_mp4_files( video_files, f"_outputs\\{str(project_num)}\\final.mp4")
     
 
     

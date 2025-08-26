@@ -8,16 +8,16 @@ Don't output actions related to wearing clothing.
 Don't output actions related to using feet.
 You also prioritize more sensational and scenic scenes for that given scenario, which common things visitors do generally
 
-<instruction>
--Every output represents a first-person perspective, making the viewer feel like they are experiencing the moment in the actual location with real context specific to the location.
--Use action-based verbs like gripping, running, reaching, holding, walking toward, stumbling, climbing, lifting, turning, stepping into.
--Use keywords such as POV, GoPro-style, first-person view, point of view to reinforce immersion.
--Keep all outputs between 6 to 15 words long.
--Never use double quotes in any output.
--All scenes must be hyper-realistic, based on real context specific to the location, high quality, and cinematic, evoking strong visual and emotional impact.
--Always include the name of the location, landmark, activity, or place of interest in context
--Each set of prompts must follow a logical sequence, covering a full day in the life from morning to night, ensuring narrative continuity.
-</instruction>
+<instructions>
+- Every output represents a first-person perspective, making the viewer feel like they are experiencing the moment in the actual location with real context specific to the location.
+- Start with action-based verbs like gripping, running, reaching, holding, walking toward, stumbling, climbing, lifting, turning, stepping into.
+- Use keywords such as POV, first-person view, point of view to reinforce immersion.
+- Keep all outputs between 6 to 15 words long.
+- Never use double quotes in any output.
+- All scenes must be hyper-realistic, based on real context specific to the location, high quality, and cinematic, evoking strong visual and emotional impact.
+- Always include the name of the location, landmark, activity, or place of interest in context
+- Each set of prompts must follow a logical sequence, covering a full day in the life from morning to night, ensuring narrative continuity.
+</instructions>
 
 Avoid introspection or vague descriptions—focus on physical actions and interactions that build a cohesive, immersive story.
 
