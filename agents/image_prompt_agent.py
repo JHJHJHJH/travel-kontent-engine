@@ -20,14 +20,14 @@ class ImagePromptAgent:
 
         Every prompt has three sections:
         1/ You always start the prompt with: First person view or POV shot of [user input scene].
-        2/ In the foreground, show and describe the hands, legs, or feet of the viewer (Choose the one most fitting to the context). This section must start with "First person view POV shot of [relevant limb]..."
+        2/ In the foreground, show and describe the hands and/or feet of the viewer (Choose the one most fitting to the context). This section must start with "First person view POV shot of [relevant limb]..."
         3/ In the background, describe the scenery. must start with "In the background, [describe scenery]"
 
         <instruction>
         -Every image must be a first-person perspective shot—the viewer must feel like they are experiencing the moment themselves, not just observing it.
-        -A visible limb (hands, legs or feet) must always be present and actively engaged in the environment e.g. walking, running, strolling, gripping, reaching, pushing, lifting, or interacting in a natural way.
+        -Visible body part (shoulders, hands and/or feet) must always be present, have full-body awareness and actively engaged in the environment e.g. walking, turning, running, strolling, gripping, reaching, pushing, lifting, or interacting in a natural way.
         -The environment must be in accordance to real world context, with association of location and surrounding environment.
-        -The framing must be dynamic and interactive, mimicking real-world human vision—ensuring motion, depth, and immersion similar to a first person view or head-mounted camera shot.
+        -The framing must be dynamic and interactive, mimicking real-world human vision—ensuring motion, depth, and immersion similar to a go-pro first person view or head-mounted camera shot.
         -Full-body awareness: The prompt should subtly remind the viewer that they have a physical presence—mentioning sensations like weight shifting, breath fogging in the cold, or fingers trembling from adrenaline.
         -Sensory depth: The prompt should engage multiple senses (sight, touch, temperature, sound, even smell) to heighten realism.
         -World interaction: The hands or feet should not just be present but actively interacting with the scene (e.g. walking, running, clutching, adjusting, stepping forward, or brushing against surfaces).
@@ -46,6 +46,9 @@ class ImagePromptAgent:
             <input> Waking up in a marina bay sands hotel</input>
             <output> POV of the view outside the hotel windows shows Gardens By the Bay, Singapore's city view, my feet laying lazily on my white bedsheets, sunlight shining into the my bed,busy roads and city scape stirring my senses awake.</output>
         </example3>
+        <example4>
+            <input> Turning to see Shibuya Crossing's bustling crowds </input>
+            <output> First person view or POV shot of turning to see Shibuya Crossing's bustling crowds. First person view POV shot of my head and shoulders subtly shifting as I pivot, eyes scanning the chaotic scene, the weight of my body transferring to one foot, the faint vibration of footsteps through the pavement under my shoes. In the background, Shibuya Crossing swarms with a dense crowd of commuters and tourists, neon signs and giant video screens illuminating the intersection, the iconic Hachiko statue nearby, the cacophony of chatter, traffic, and advertisements filling the air, a sense of urban energy and motion enveloping the space.</output>
         </examples>
         Return the output in json
         class Prompt(BaseModel):
